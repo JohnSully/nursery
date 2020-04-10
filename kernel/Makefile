@@ -3,7 +3,7 @@ splicekernel: forksplice.o splice.o
 
 
 %.o: %.c
-	gcc -c $(CFLAGS) $< -o $@
+	gcc -c $(CFLAGS) $< -o $@ -g
 
 %.o: %.asm
 	nasm $< -o $@ -f elf64

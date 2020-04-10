@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
+#include <string.h>
 
 void hook(void *ptr);
 
@@ -43,7 +44,14 @@ void processdir(const char *path)
         
     while ((de = readdir(d)) != NULL)
     {
-        const char *fpath = de->d_name;
+        if (de->d_name[0] == '.')
+            continue;
+
+        char fpath[1024];
+        strcpy(fpath, path);
+        strcat(fpath, "/");
+        strcat(fpath, de->d_name);
+        
         if (de->d_type == DT_DIR)
         {
             processdir(fpath);
